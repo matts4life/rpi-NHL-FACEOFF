@@ -2,6 +2,9 @@ import random
 import time
 import pygame
 from pygame import mixer
+from gpiozero import AngularServo
+
+servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 
 mixer.init()
 
@@ -14,13 +17,13 @@ class Run:
 
     def Drop(self):
         if self.drop:
-            self.sfx_1.play()
-            time.sleep(1)
-            self.sfx_1.play()
-            time.sleep(1)
-            self.sfx_2.play()
-            time.sleep(.5)
-            print("yay")
+            while True:
+                servo.angle = 90
+                time.sleep(2)
+                servo.angle = 0
+                time.sleep(2)
+                servo.angle = -90
+                time.sleep(2)
 
 
 run = Run()
